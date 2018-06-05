@@ -57,3 +57,40 @@ describe('Blog posts API resource', function() {
         return closeServer();
     })
 })
+
+describe('GET endpoint', function(){
+    it('should return all existing blog posts', function() {
+
+    });
+
+    it('should return blog posts with the correct fields', function() {
+
+    });
+
+});
+
+describe('POST endpoint', function() {
+    it('should add a new blog post entry', function() {
+
+    });
+
+});
+
+describe('PUT endpoint', function() {
+    it('should update an existing blog post with fields you send', function() {
+
+    });
+
+    it('should run an error if the id of the updated post does not match with the original one', function() {
+
+    });
+
+
+});
+
+describe('DELETE endpoint', function() {
+    it('should delete a post by id', function() {
+        
+    })
+
+});
