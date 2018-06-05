@@ -32,5 +32,28 @@ function generateBlogPostData() {
           title: faker.lorem.word(),
           content: faker.lorem.paragraph(),
           created: faker.date.past()
-    }
+    };
 }
+
+function tearDownDb() {
+    console.warn('Deleting database');
+    return mongoose.connection.dropDatabase();
+}
+
+describe('Blog posts API resource', function() {
+    before(function() {
+        return runServer(TEST_DATABASE_URL);
+    });
+
+    beforeEach(function() {
+        return seedBlogPostData();
+    });
+
+    afterEach(function() {
+        return tearDownDb();
+    });
+
+    after(function() {
+        return closeServer();
+    })
+})
