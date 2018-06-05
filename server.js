@@ -10,6 +10,7 @@ const { BlogPost } = require('./models');
 
 const app = express();
 
+
 app.use(morgan('common'));
 app.use(express.json());
 
