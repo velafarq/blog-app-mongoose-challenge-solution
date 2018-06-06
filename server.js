@@ -2,13 +2,15 @@
 
 const express = require('express');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const { DATABASE_URL, PORT } = require('./config');
+const { PORT, DATABASE_URL } = require('./config');
 const { BlogPost } = require('./models');
 
 const app = express();
+app.use(bodyParser.json());
 
 
 app.use(morgan('common'));
@@ -18,7 +20,9 @@ app.get('/posts', (req, res) => {
   BlogPost
     .find()
     .then(posts => {
-      res.json(posts.map(post => post.serialize()));
+      res.json({
+        posts: posts.map((post) => post.serialize())
+      });
     })
     .catch(err => {
       console.error(err);

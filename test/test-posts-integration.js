@@ -30,8 +30,8 @@ function generateBlogPostData() {
             lastName: faker.name.lastName()
           },
           title: faker.lorem.word(),
-          content: faker.lorem.paragraph(),
-          created: faker.date.past()
+          content: faker.lorem.paragraph()
+          
     };
 }
 
@@ -63,13 +63,13 @@ describe('GET endpoint', function(){
         let res;
         return chai.request(app)
         .get('/posts')
-        .then(function(_res) {
+        .then(_res => {
             res = _res;
             expect(res).to.have.status(200);
             expect(res.body.posts).to.have.lengthOf.at.least(1);
             return BlogPost.count();
         })
-        .then(function(count) {
+        .then(count => {
             expect(res.body.restaurants).to.have.lengthOf(count);
         });
     });
@@ -88,15 +88,15 @@ describe('GET endpoint', function(){
                 expect(post).to.be.a('object');
                 expect(post).to.include.keys('id', 'title', 'author', 'content', 'created');
             });
-            resPost = res.body.posts[0]
+            resPost = res.body[0];
             return BlogPost.findById(resPost.id);
         })
         .then(function(post) {
             expect(resPost.id).to.equal(post.id);
             expect(resPost.title).to.equal(post.title);
-            expect(resPost.author).to.equal(post.author);
+            expect(resPost.author).to.equal(post.authorName);
             expect(resPost.content).to.equal(post.content);
-            expect(resPost.created).to.equal(post.created);
+           
         });
     });
 
@@ -127,7 +127,6 @@ describe('POST endpoint', function() {
             expect(post.title).to.equal(newPost.title);
             expect(post.author).to.equal(newPost.author);
             expect(post.content).to.equal(newPost.content);
-            expect(post.created).to.equal(newPost.created);
         });
 
     });
@@ -159,10 +158,6 @@ describe('PUT endpoint', function() {
             expect(post.title).to.equal(updatedFields.title);
             expect(post.content).to.equal(updatedFields.content);
         });
-
-    });
-
-    it('should run an error if the id of the updated post does not match with the original one', function() {
 
     });
 
