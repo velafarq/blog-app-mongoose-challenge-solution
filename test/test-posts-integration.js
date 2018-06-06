@@ -55,8 +55,8 @@ describe('Blog posts API resource', function() {
 
     after(function() {
         return closeServer();
-    })
-})
+    });
+
 
 describe('GET endpoint', function(){
     it('should return all existing blog posts', function() {
@@ -136,6 +136,29 @@ describe('POST endpoint', function() {
 
 describe('PUT endpoint', function() {
     it('should update an existing blog post with fields you send', function() {
+        const updatedFields = {
+            title: 'Hello Moon!',
+            content: faker.lorem.paragraph()
+        }
+
+        return BlogPost
+        .findOne()
+        .then(function(post) {
+            updatedFields.id = post.id;
+
+            return chai.request(app)
+            .put(`/posts/${post.id}`)
+            .send(updatedFields);
+        })
+        .then(function(res) {
+            expect(res).to.have.status(204);
+
+            return BlogPost.findById(updatedFields.id);
+        })
+        .then(function(post) {
+            expect(post.title).to.equal(updatedFields.title);
+            expect(post.content).to.equal(updatedFields.content);
+        });
 
     });
 
@@ -148,7 +171,23 @@ describe('PUT endpoint', function() {
 
 describe('DELETE endpoint', function() {
     it('should delete a post by id', function() {
+        let post;
 
-    })
+        return BlogPost
+        .findOne()
+        .then(function(_post) {
+            post = _post;
+            return chai.request(app)
+            .delete(`/posts/${post.id}`);
+        })
+        .then(function(res) {
+            expect(res).to.have.status(204);
+            return BlogPost.findById(post.id);
+        })
+        .then(function(_post) {
+            expect(_post).to.be.null;
+        });
+    });
 
+});
 });
