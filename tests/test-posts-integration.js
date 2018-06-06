@@ -60,11 +60,44 @@ describe('Blog posts API resource', function() {
 
 describe('GET endpoint', function(){
     it('should return all existing blog posts', function() {
-
+        let res;
+        return chai.request(app)
+        .get('/posts')
+        .then(function(_res) {
+            res = _res;
+            expect(res).to.have.status(200);
+            expect(res.body.posts).to.have.lengthOf.at.least(1);
+            return BlogPost.count();
+        })
+        .then(function(count) {
+            expect(res.body.restaurants).to.have.lengthOf(count);
+        });
     });
 
     it('should return blog posts with the correct fields', function() {
+        let resPost;
+        return chai.request(app)
+        .get('/posts')
+        .then(function(res) {
+            expect(res).to.have.status(200);
+            expect(res).to.be.json;
+            expect(res.body.posts).to.be.a('array');
+            expect(res.body.posts).to.have.lengthOf.at.least(1);
 
+            res.body.posts.forEach(function(post) {
+                expect(post).to.be.a('object');
+                expect(post).to.include.keys('id', 'title', 'author', 'content', 'created');
+            });
+            resPost = res.body.posts[0]
+            return BlogPost.findById(resPost.id);
+        })
+        .then(function(post) {
+            expect(resPost.id).to.equal(post.id);
+            expect(resPost.title).to.equal(post.title);
+            expect(resPost.author).to.equal(post.author);
+            expect(resPost.content).to.equal(post.content);
+            expect(resPost.created).to.equal(post.created);
+        });
     });
 
 });
@@ -90,7 +123,7 @@ describe('PUT endpoint', function() {
 
 describe('DELETE endpoint', function() {
     it('should delete a post by id', function() {
-        
+
     })
 
 });
