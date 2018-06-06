@@ -105,6 +105,31 @@ describe('GET endpoint', function(){
 describe('POST endpoint', function() {
     it('should add a new blog post entry', function() {
 
+        const newPost = generateBlogPostData();
+
+        return chai.request(app)
+        .post('/posts')
+        .send(newPost)
+        .then(function(res) {
+            expect(res).to.have.status(201);
+            expect(res).to.be.json;
+            expect(res.body).to.be.a('object');
+            expect(res.body).to.include.keys('id', 'title', 'author', 'content', 'created');
+            expect(res.body.title).to.equal(newPost.title);
+            expect(res.body.id).to.not.be.null;
+            expect(res.body.author).to.equal(newPost.author);
+            expect(res.body.content).to.equal(newPost.content);
+            expect(res.body.create).to.equal(newPost.created);
+
+            return BlogPost.findById(res.body.id);
+        })
+        .then(function(post) {
+            expect(post.title).to.equal(newPost.title);
+            expect(post.author).to.equal(newPost.author);
+            expect(post.content).to.equal(newPost.content);
+            expect(post.created).to.equal(newPost.created);
+        });
+
     });
 
 });
