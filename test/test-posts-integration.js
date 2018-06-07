@@ -158,10 +158,7 @@ describe('PUT endpoint', function() {
             expect(post.title).to.equal(updatedFields.title);
             expect(post.content).to.equal(updatedFields.content);
         });
-
     });
-
-
 });
 
 describe('DELETE endpoint', function() {
