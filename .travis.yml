@@ -2,3 +2,10 @@ language: node_js
 node_js: node
 services:
 - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: DjclZHBPW/isG/N83B4gHnzpIz0QzhgT2asYIzsZTSZIIMkZy3VG32sQrMb4SBbHjW8pusMDGtpp8tfMJC/03w+9HjWtBMpm/6e2ywDkRPg6xq4cI3zHZROUhiA03SOYweY77LenfRzqbpMa0IvUuJEfszCZAZUvuWmgOcTrILwXex6GjQvJVOqRqz1vMBTnvc45HjqEWpTQy95HMrynG5nxWqU+2SM9bMeRtaJ/RwIf841hGJ05jLNeBQNQFYWPp54gt1AShrlpOLBzNVZJZzKeA0hWl1pB1QHUL0HgnA6B6BXkM3hvKluetsW3ZCHkSUuehTHaioYJp57MeK9OrdviW2Ya+5ekzK/xsabP/yGICX06WNmOWG47dAYvNEd+wTVBeCDbSWNjoiROvpJ19yQzCDy2StTyAzhxQNm24mV7KPEKa0JnoHg3WqGkHTsJitMIB+PDl7Jn7s34iqpw3BTxDXV6+ZAuGhhPJoy9Eq2VbvDmCYYy8Cp6ymaZx9LAnci9bMB1I/5oDIOdaaw5epgEivlpmbvZhkBMNmsJSvQnrB8QnL7LkPmhH0WKaEGh2ZN/njdaNFrf5+9QJeCl5m1ldn88dVx1wQ7M5NIoaWogrGVPNxYi8EvImEabaCt6YCtr4EF8ctX12snWayu/yjAUdT9PcIK33f0whavefJE=
+  app: salty-retreat-71137
+  on:
+    repo: velafarq/blog-app-mongoose-challenge-solution
