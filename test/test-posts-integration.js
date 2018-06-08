@@ -66,11 +66,11 @@ describe('GET endpoint', function(){
         .then(_res => {
             res = _res;
             expect(res).to.have.status(200);
-            expect(res.body.posts).to.have.lengthOf.at.least(1);
+            expect(res.body).to.have.lengthOf.at.least(1);
             return BlogPost.count();
         })
         .then(count => {
-            expect(res.body.restaurants).to.have.lengthOf(count);
+            expect(res.body).to.have.lengthOf(count);
         });
     });
 
@@ -81,20 +81,23 @@ describe('GET endpoint', function(){
         .then(function(res) {
             expect(res).to.have.status(200);
             expect(res).to.be.json;
-            expect(res.body.posts).to.be.a('array');
-            expect(res.body.posts).to.have.lengthOf.at.least(1);
+            expect(res.body).to.be.a('array');
+            expect(res.body).to.have.lengthOf.at.least(1);
 
-            res.body.posts.forEach(function(post) {
+            res.body.forEach(function(post) {
                 expect(post).to.be.a('object');
-                expect(post).to.include.keys('id', 'title', 'author', 'content', 'created');
+                expect(post).to.include.keys('_id', 'title', 'author', 'content', 'created');
             });
+            
             resPost = res.body[0];
-            return BlogPost.findById(resPost.id);
+            
+            return BlogPost.findById(resPost._id);
+
         })
         .then(function(post) {
-            expect(resPost.id).to.equal(post.id);
+            expect(JSON.stringify(resPost._id)).to.equal(JSON.stringify(post._id));
             expect(resPost.title).to.equal(post.title);
-            expect(resPost.author).to.equal(post.authorName);
+            expect(resPost.author.firstName).to.equal(post.author.firstName);
             expect(resPost.content).to.equal(post.content);
            
         });
