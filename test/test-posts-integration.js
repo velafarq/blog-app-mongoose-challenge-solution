@@ -117,7 +117,7 @@ describe('POST endpoint', function() {
             expect(res.body).to.include.keys('id', 'title', 'author', 'content', 'created');
             expect(res.body.title).to.equal(newPost.title);
             expect(res.body.id).to.not.be.null;
-            expect(res.body.author).to.equal(newPost.author);
+            expect(res.body.author).to.equal(newPost.authorName);
             expect(res.body.content).to.equal(newPost.content);
             expect(res.body.create).to.equal(newPost.created);
 
@@ -125,7 +125,7 @@ describe('POST endpoint', function() {
         })
         .then(function(post) {
             expect(post.title).to.equal(newPost.title);
-            expect(post.author).to.equal(newPost.author);
+            expect(post.authorName).to.equal(newPost.authorName);
             expect(post.content).to.equal(newPost.content);
         });
 
