@@ -125,7 +125,8 @@ describe('POST endpoint', function() {
         })
         .then(function(post) {
             expect(post.title).to.equal(newPost.title);
-            // expect(post.authorName).to.equal(newPost.authorName);
+            expect(post.author.firstName).to.equal(newPost.author.firstName);
+            expect(post.author.lastName).to.equal(newPost.author.lastName);
             expect(post.content).to.equal(newPost.content);
         });
 
